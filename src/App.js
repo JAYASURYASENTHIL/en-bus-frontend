@@ -157,7 +157,7 @@ export default function App() {
     );
 
     setSuggestions(list.slice(0, 6));
-  }, [to,stops]);
+  }, [to]);
 
   const searchBus = async () => {
     try {
