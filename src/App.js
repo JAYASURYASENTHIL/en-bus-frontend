@@ -72,7 +72,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [suggestions, setSuggestions] = useState([]);
-  const [locating, setLocating] = useState(false);
+ 
 
   const [isListening, setIsListening] =
     useState(false);
