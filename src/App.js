@@ -235,7 +235,7 @@ export default function App() {
       return;
     }
 
-    setLocating(true);
+  
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -260,11 +260,11 @@ export default function App() {
         });
 
         setFrom(nearest.en);
-        setLocating(false);
+        
       },
       () => {
         alert("Location failed");
-        setLocating(false);
+        
       }
     );
   };
