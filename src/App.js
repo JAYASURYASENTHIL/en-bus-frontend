@@ -1,6 +1,44 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
+const stops = [
+    {
+      en: "Erode Bus Stand",
+      ta: "ஈரோடு பேருந்து நிலையம்",
+      lat: 11.3410,
+      lon: 77.7172
+    },
+    {
+      en: "Perundurai",
+      ta: "பெருந்துறை",
+      lat: 11.2756,
+      lon: 77.5874
+    },
+    {
+      en: "Bhavani",
+      ta: "பவானி",
+      lat: 11.4450,
+      lon: 77.6820
+    },
+    {
+      en: "Chennimalai",
+      ta: "சென்னிமலை",
+      lat: 11.1639,
+      lon: 77.6034
+    },
+    {
+      en: "Ingur",
+      ta: "இங்கூர்",
+      lat: 11.2418,
+      lon: 77.6892
+    },
+    {
+      en: "Thindal",
+      ta: "திண்டல்",
+      lat: 11.3101,
+      lon: 77.6761
+    }
+  ];
 
 export default function App() {
   const API =
@@ -72,44 +110,7 @@ export default function App() {
 
   const t = text[lang];
 
-  const stops = [
-    {
-      en: "Erode Bus Stand",
-      ta: "ஈரோடு பேருந்து நிலையம்",
-      lat: 11.3410,
-      lon: 77.7172
-    },
-    {
-      en: "Perundurai",
-      ta: "பெருந்துறை",
-      lat: 11.2756,
-      lon: 77.5874
-    },
-    {
-      en: "Bhavani",
-      ta: "பவானி",
-      lat: 11.4450,
-      lon: 77.6820
-    },
-    {
-      en: "Chennimalai",
-      ta: "சென்னிமலை",
-      lat: 11.1639,
-      lon: 77.6034
-    },
-    {
-      en: "Ingur",
-      ta: "இங்கூர்",
-      lat: 11.2418,
-      lon: 77.6892
-    },
-    {
-      en: "Thindal",
-      ta: "திண்டல்",
-      lat: 11.3101,
-      lon: 77.6761
-    }
-  ];
+  
 
   const translatePlace = (name) => {
     const found = stops.find(
