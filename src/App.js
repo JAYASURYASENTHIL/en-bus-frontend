@@ -152,7 +152,7 @@ export default function App() {
     );
 
     setSuggestions(list.slice(0, 6));
-  }, [to]);
+  }, [to,stops]);
 
   const searchBus = async () => {
     try {
