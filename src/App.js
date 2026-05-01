@@ -6,14 +6,13 @@ import React, {
 // ADD THIS AT TOP OF App.js under React import
 
 import {
-  Bus,
   MapPin,
+  Clock3,
   ArrowUpDown,
   Navigation,
   Search,
   Mic,
   LocateFixed,
-  Clock3,
   Home,
   Star,
   History,
