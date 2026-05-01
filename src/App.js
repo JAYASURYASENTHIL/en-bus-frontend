@@ -3,6 +3,23 @@ import React, {
   useState,
   useMemo
 } from "react";
+// ADD THIS AT TOP OF App.js under React import
+
+import {
+  Bus,
+  MapPin,
+  ArrowUpDown,
+  Navigation,
+  Search,
+  Mic,
+  LocateFixed,
+  Clock3,
+  Home,
+  Star,
+  History,
+  Bell,
+  User
+} from "lucide-react";
 import axios from "axios";
 import "./App.css";
 const stops = [
@@ -432,286 +449,995 @@ export default function App() {
     return `${diff} min`;
   };
 
-  return (
-    <div className="app">
+//   return (
+//     <div className="app">
 
-      <div className="hero">
+//       <div className="hero">
 
-        <div className="heroTop">
+//         <div className="heroTop">
+
+//           <div>
+//             <h1>
+//               🚌 {t.title}
+//             </h1>
+
+//             <p>
+//               {t.subtitle}
+//             </p>
+//           </div>
+
+//           <select
+//             value={lang}
+//             onChange={(e) =>
+//               setLang(
+//                 e.target.value
+//               )
+//             }
+//           >
+//             <option value="ta">
+//               தமிழ்
+//             </option>
+
+//             <option value="en">
+//               English
+//             </option>
+//           </select>
+
+//         </div>
+
+//       </div>
+
+//       <div className="searchCard">
+
+//         <input
+//           value={translatePlace(
+//             from
+//           )}
+//           onChange={(e) =>
+//             setFrom(
+//               toEnglish(
+//                 e.target.value
+//               )
+//             )
+//           }
+//           placeholder={t.from}
+//         />
+
+//         <button
+//           className="swap"
+//           onClick={
+//             reverseRoute
+//           }
+//         >
+//           ↕
+//         </button>
+
+//         <input
+//           value={to}
+//           onChange={(e) =>
+//             setTo(
+//               e.target.value
+//             )
+//           }
+//           placeholder={t.to}
+//           onKeyDown={(e) =>
+//             e.key ===
+//               "Enter" &&
+//             searchBus()
+//           }
+//         />
+
+//         {suggestions.length >
+//           0 && (
+//           <div className="suggestions">
+//             {suggestions.map(
+//               (
+//                 s,
+//                 i
+//               ) => (
+//                 <div
+//                   key={
+//                     i
+//                   }
+//                   onClick={() => {
+//                     setTo(
+//                       lang ===
+//                         "ta"
+//                         ? s.ta
+//                         : s.en
+//                     );
+//                     setSuggestions(
+//                       []
+//                     );
+//                   }}
+//                 >
+//                   {lang ===
+//                   "ta"
+//                     ? s.ta
+//                     : s.en}
+//                 </div>
+//               )
+//             )}
+//           </div>
+//         )}
+
+//         <div className="actionRow">
+
+//           <button
+//             className="mainBtn"
+//             onClick={
+//               searchBus
+//             }
+//           >
+//             {loading
+//               ? t.searching
+//               : t.search}
+//           </button>
+
+//           <button
+//             className="mini purple"
+//             onClick={
+//               startVoice
+//             }
+//           >
+//             {isListening
+//               ? "■"
+//               : "🎤"}
+//           </button>
+
+//           <button
+//             className="mini teal"
+//             onClick={
+//               useMyLocation
+//             }
+//           >
+//             {locating
+//               ? "..."
+//               : "📍"}
+//           </button>
+
+//         </div>
+
+//       </div>
+
+//       <div className="filters">
+
+//         {[
+//           "all",
+//           "now",
+//           "next30",
+//           "morning",
+//           "evening",
+//           "last"
+//         ].map(
+//           (
+//             item
+//           ) => (
+//             <button
+//               key={
+//                 item
+//               }
+//               className={
+//                 filter ===
+//                 item
+//                   ? "activeFilter"
+//                   : ""
+//               }
+//               onClick={() =>
+//                 setFilter(
+//                   item
+//                 )
+//               }
+//             >
+//               {
+//                 t[
+//                   item
+//                 ]
+//               }
+//             </button>
+//           )
+//         )}
+
+//       </div>
+
+//       {nextBus && (
+//         <div className="next">
+//           {t.nextBus}:{" "}
+//           {
+//             nextBus.displayTag
+//           }{" "}
+//           •{" "}
+//           {
+//             nextBus.departureTime
+//           }{" "}
+//           (
+//           {countdown()}
+//           )
+//         </div>
+//       )}
+
+//       <div className="count">
+//         {
+//           filteredBuses.length
+//         }{" "}
+//         {t.found}
+//       </div>
+
+//       {filteredBuses.map(
+//         (
+//           bus,
+//           i
+//         ) => (
+//           <div
+//             className={`busCard ${
+//               nextBus &&
+//               bus._id ===
+//                 nextBus._id
+//                 ? "highlight"
+//                 : ""
+//             }`}
+//             key={i}
+//           >
+//             <div className="leftTag">
+//               {
+//                 bus.displayTag
+//               }
+//             </div>
+
+//             <div className="mid">
+
+//               <div className="dest">
+//                 {translatePlace(
+//                   bus.destination
+//                 )}
+//               </div>
+
+//               <div className="detail">
+//                 {t.arr}:{" "}
+//                 {bus.arrivalTime ||
+//                   "--"}{" "}
+//                 • {t.dep}:{" "}
+//                 {
+//                   bus.departureTime
+//                 }
+//               </div>
+
+//               <div className="detail">
+//                 {t.source}:{" "}
+//                 {translatePlace(
+//                   bus.source
+//                 )}
+//               </div>
+
+//             </div>
+
+//             <div
+//               className={
+//                 bus.operatorType ===
+//                 "government"
+//                   ? "badge green"
+//                   : "badge gold"
+//               }
+//             >
+//               {bus.operatorType ===
+//               "government"
+//                 ? t.govt
+//                 : t.pvt}
+//             </div>
+
+//           </div>
+//         )
+//       )}
+//       {/* ADD THIS AT VERY BOTTOM of your App.js JSX, just before final closing </div> */}
+
+// <div className="bottom-nav">
+//   <button className="nav-item active">
+//     <span>⌂</span>
+//     <small>{lang === "ta" ? "முகப்பு" : "Home"}</small>
+//   </button>
+
+//   <button className="nav-item">
+//     <span>★</span>
+//     <small>{lang === "ta" ? "பிடித்தவை" : "Saved"}</small>
+//   </button>
+
+//   <button className="nav-item">
+//     <span>🕘</span>
+//     <small>{lang === "ta" ? "தேடல்கள்" : "Recent"}</small>
+//   </button>
+
+//   <button className="nav-item">
+//     <span>🔔</span>
+//     <small>{lang === "ta" ? "அறிவிப்புகள்" : "Alerts"}</small>
+//   </button>
+
+//   <button className="nav-item">
+//     <span>◯</span>
+//     <small>{lang === "ta" ? "எனது" : "Profile"}</small>
+//   </button>
+// </div>
+
+//     </div>
+//   );
+// }
+/* REPLACE ONLY YOUR return (...) BLOCK WITH THIS */
+
+// return (
+
+//   <div className="app shell">
+
+//     {/* HERO */}
+//     <header className="heroV3">
+
+//       <div className="heroTopBar">
+
+//         <div className="brandZone">
+
+//           <div className="brandSquare">
+//             <Bus size={28} />
+//           </div>
+
+//           <div>
+//             <h1>{t.title}</h1>
+//             <p>{t.subtitle}</p>
+//           </div>
+
+//         </div>
+
+//         <select
+//           className="langSelectV3"
+//           value={lang}
+//           onChange={(e) =>
+//             setLang(e.target.value)
+//           }
+//         >
+//           <option value="ta">
+//             தமிழ்
+//           </option>
+//           <option value="en">
+//             English
+//           </option>
+//         </select>
+
+//       </div>
+
+//       <div className="heroStats">
+
+//         <div className="heroChip">
+//           <MapPin size={14} />
+//           <span>
+//             {translatePlace(from)}
+//           </span>
+//         </div>
+
+//         <div className="heroChip">
+//           <Clock3 size={14} />
+//           <span>
+//             {new Date().toLocaleTimeString(
+//               [],
+//               {
+//                 hour: "2-digit",
+//                 minute:
+//                   "2-digit"
+//               }
+//             )}
+//           </span>
+//         </div>
+
+//         <div className="heroChip live">
+//           <span className="pulse"></span>
+//           <span>Live</span>
+//         </div>
+
+//       </div>
+
+//     </header>
+
+//     {/* SEARCH MODULE */}
+//     <section className="searchModule">
+
+//       <div className="fieldCard">
+
+//         <div className="fieldRow">
+//           <MapPin size={18} />
+//           <input
+//             value={translatePlace(from)}
+//             onChange={(e) =>
+//               setFrom(
+//                 toEnglish(
+//                   e.target.value
+//                 )
+//               )
+//             }
+//             placeholder={t.from}
+//           />
+//         </div>
+
+//         <button
+//           className="swapCenter"
+//           onClick={reverseRoute}
+//         >
+//           <ArrowUpDown size={18} />
+//         </button>
+
+//         <div className="fieldRow">
+//           <Navigation size={18} />
+//           <input
+//             value={to}
+//             onChange={(e) =>
+//               setTo(
+//                 e.target.value
+//               )
+//             }
+//             placeholder={t.to}
+//             onKeyDown={(e) =>
+//               e.key ===
+//                 "Enter" &&
+//               searchBus()
+//             }
+//           />
+//         </div>
+
+//         {suggestions.length >
+//           0 && (
+//           <div className="smartSuggest">
+//             {suggestions.map(
+//               (
+//                 s,
+//                 i
+//               ) => (
+//                 <div
+//                   key={i}
+//                   className="smartRow"
+//                   onClick={() => {
+//                     setTo(
+//                       lang ===
+//                         "ta"
+//                         ? s.ta
+//                         : s.en
+//                     );
+//                     setSuggestions(
+//                       []
+//                     );
+//                   }}
+//                 >
+//                   <Search size={15} />
+//                   <span>
+//                     {lang ===
+//                     "ta"
+//                       ? s.ta
+//                       : s.en}
+//                   </span>
+//                 </div>
+//               )
+//             )}
+//           </div>
+//         )}
+
+//         <div className="actionGrid">
+
+//           <button
+//             className="ctaMain"
+//             onClick={searchBus}
+//           >
+//             <Search size={18} />
+//             <span>
+//               {loading
+//                 ? t.searching
+//                 : t.search}
+//             </span>
+//           </button>
+
+//           <button
+//             className={`squareBtn ${
+//               isListening
+//                 ? "recording"
+//                 : ""
+//             }`}
+//             onClick={startVoice}
+//           >
+//             <Mic size={18} />
+//           </button>
+
+//           <button
+//             className="squareBtn"
+//             onClick={
+//               useMyLocation
+//             }
+//           >
+//             {locating
+//               ? "..."
+//               : (
+//                 <LocateFixed size={18} />
+//               )}
+//           </button>
+
+//         </div>
+
+//       </div>
+
+//     </section>
+
+//     {/* FILTERS */}
+//     <section className="filterRail">
+
+//       {[
+//         "all",
+//         "now",
+//         "next30",
+//         "morning",
+//         "evening",
+//         "last"
+//       ].map(
+//         (
+//           item
+//         ) => (
+//           <button
+//             key={item}
+//             className={
+//               filter ===
+//               item
+//                 ? "railChip active"
+//                 : "railChip"
+//             }
+//             onClick={() =>
+//               setFilter(
+//                 item
+//               )
+//             }
+//           >
+//             {t[item]}
+//           </button>
+//         )
+//       )}
+
+//     </section>
+
+//     {/* NEXT BUS */}
+//     {nextBus && (
+//       <section className="nextBanner">
+
+//         <div className="nextInfo">
+//           <Clock3 size={18} />
+//           <div>
+//             <small>
+//               {t.nextBus}
+//             </small>
+//             <strong>
+//               {
+//                 nextBus.displayTag
+//               } •{" "}
+//               {
+//                 nextBus.departureTime
+//               }
+//             </strong>
+//           </div>
+//         </div>
+
+//         <div className="etaBadge">
+//           {countdown()}
+//         </div>
+
+//       </section>
+//     )}
+
+//     <div className="foundLine">
+//       {
+//         filteredBuses.length
+//       }{" "}
+//       {t.found}
+//     </div>
+
+//     {/* RESULTS */}
+//     <section className="stackCards">
+
+//       {filteredBuses.map(
+//         (
+//           bus,
+//           i
+//         ) => (
+//           <div
+//             key={i}
+//             className={`routeCard ${
+//               nextBus &&
+//               bus._id ===
+//                 nextBus._id
+//                 ? "topPick"
+//                 : ""
+//             }`}
+//           >
+
+//             <div className="routeCode">
+//               {
+//                 bus.displayTag
+//               }
+//             </div>
+
+//             <div className="routeMain">
+
+//               <h3>
+//                 {translatePlace(
+//                   bus.destination
+//                 )}
+//               </h3>
+
+//               <p>
+//                 {t.arr}:{" "}
+//                 {bus.arrivalTime ||
+//                   "--"}{" "}
+//                 • {t.dep}:{" "}
+//                 {
+//                   bus.departureTime
+//                 }
+//               </p>
+
+//               <p>
+//                 {translatePlace(
+//                   bus.source
+//                 )}
+//               </p>
+
+//             </div>
+
+//             <div className="routeSide">
+
+//               <div
+//                 className={
+//                   bus.operatorType ===
+//                   "government"
+//                     ? "miniTag govt"
+//                     : "miniTag pvt"
+//                 }
+//               >
+//                 {bus.operatorType ===
+//                 "government"
+//                   ? t.govt
+//                   : t.pvt}
+//               </div>
+
+//               <div className="timeMini">
+//                 {nextBus &&
+//                 bus._id ===
+//                   nextBus._id
+//                   ? countdown()
+//                   : "--"}
+//               </div>
+
+//             </div>
+
+//           </div>
+//         )
+//       )}
+
+//     </section>
+
+//     {/* DOCK */}
+//     <nav className="dockV2">
+
+//       <button className="dockBtn active">
+//         <Home size={18} />
+//         <span>
+//           {lang === "ta"
+//             ? "முகப்பு"
+//             : "Home"}
+//         </span>
+//       </button>
+
+//       <button className="dockBtn">
+//         <Star size={18} />
+//         <span>
+//           {lang === "ta"
+//             ? "சேமிப்பு"
+//             : "Saved"}
+//         </span>
+//       </button>
+
+//       <button className="dockBtn">
+//         <History size={18} />
+//         <span>
+//           {lang === "ta"
+//             ? "தேடல்"
+//             : "Recent"}
+//         </span>
+//       </button>
+
+//       <button className="dockBtn">
+//         <Bell size={18} />
+//         <span>
+//           {lang === "ta"
+//             ? "அறிவிப்பு"
+//             : "Alerts"}
+//         </span>
+//       </button>
+
+//       <button className="dockBtn">
+//         <User size={18} />
+//         <span>
+//           {lang === "ta"
+//             ? "எனது"
+//             : "Profile"}
+//         </span>
+//       </button>
+
+//     </nav>
+
+//   </div>
+// )};
+/* REPLACE ONLY YOUR return (...) BLOCK IN App.js WITH THIS */
+
+return (
+  <div className="tos-app">
+
+    <header className="tos-hero">
+
+      <div className="tos-nav">
+
+        <div className="tos-brand">
+
+          <div className="tos-logo"></div>
 
           <div>
-            <h1>
-              🚌 {t.title}
-            </h1>
-
-            <p>
-              {t.subtitle}
-            </p>
+            <h1>{t.title}</h1>
+            <p>{t.subtitle}</p>
           </div>
-
-          <select
-            value={lang}
-            onChange={(e) =>
-              setLang(
-                e.target.value
-              )
-            }
-          >
-            <option value="ta">
-              தமிழ்
-            </option>
-
-            <option value="en">
-              English
-            </option>
-          </select>
 
         </div>
 
-      </div>
-
-      <div className="searchCard">
-
-        <input
-          value={translatePlace(
-            from
-          )}
+        <select
+          className="tos-lang"
+          value={lang}
           onChange={(e) =>
-            setFrom(
-              toEnglish(
-                e.target.value
-              )
-            )
-          }
-          placeholder={t.from}
-        />
-
-        <button
-          className="swap"
-          onClick={
-            reverseRoute
+            setLang(e.target.value)
           }
         >
-          ↕
+          <option value="ta">தமிழ்</option>
+          <option value="en">English</option>
+        </select>
+
+      </div>
+
+      <div className="tos-strip">
+
+        <div className="tos-pill">
+          <MapPin size={14}/>
+          {translatePlace(from)}
+        </div>
+
+        <div className="tos-pill">
+          <Clock3 size={14}/>
+          {new Date().toLocaleTimeString([],{
+            hour:"2-digit",
+            minute:"2-digit"
+          })}
+        </div>
+
+        <div className="tos-pill live">
+          <span className="live-dot"></span>
+          Live
+        </div>
+
+      </div>
+
+    </header>
+
+    <section className="tos-search">
+
+      <div className="tos-card">
+
+        <div className="tos-input">
+          <MapPin size={18}/>
+          <input
+            value={translatePlace(from)}
+            onChange={(e)=>
+              setFrom(
+                toEnglish(e.target.value)
+              )
+            }
+            placeholder={t.from}
+          />
+        </div>
+
+        <button
+          className="tos-swap"
+          onClick={reverseRoute}
+        >
+          <ArrowUpDown size={18}/>
         </button>
 
-        <input
-          value={to}
-          onChange={(e) =>
-            setTo(
-              e.target.value
-            )
-          }
-          placeholder={t.to}
-          onKeyDown={(e) =>
-            e.key ===
-              "Enter" &&
-            searchBus()
-          }
-        />
+        <div className="tos-input">
+          <Navigation size={18}/>
+          <input
+            value={to}
+            onChange={(e)=>
+              setTo(e.target.value)
+            }
+            placeholder={t.to}
+            onKeyDown={(e)=>
+              e.key==="Enter" &&
+              searchBus()
+            }
+          />
+        </div>
 
-        {suggestions.length >
-          0 && (
-          <div className="suggestions">
-            {suggestions.map(
-              (
-                s,
-                i
-              ) => (
-                <div
-                  key={
-                    i
-                  }
-                  onClick={() => {
-                    setTo(
-                      lang ===
-                        "ta"
-                        ? s.ta
-                        : s.en
-                    );
-                    setSuggestions(
-                      []
-                    );
-                  }}
-                >
-                  {lang ===
-                  "ta"
+        {suggestions.length > 0 && (
+          <div className="tos-suggest">
+            {suggestions.map((s,i)=>(
+              <div
+                key={i}
+                className="tos-suggest-row"
+                onClick={()=>{
+                  setTo(
+                    lang==="ta"
                     ? s.ta
-                    : s.en}
-                </div>
-              )
-            )}
+                    : s.en
+                  );
+                  setSuggestions([]);
+                }}
+              >
+                <Search size={15}/>
+                <span>
+                  {lang==="ta" ? s.ta : s.en}
+                </span>
+              </div>
+            ))}
           </div>
         )}
 
-        <div className="actionRow">
+        <div className="tos-actions">
 
           <button
-            className="mainBtn"
-            onClick={
-              searchBus
-            }
+            className="tos-searchbtn"
+            onClick={searchBus}
           >
-            {loading
-              ? t.searching
-              : t.search}
+            <Search size={18}/>
+            {loading ? t.searching : t.search}
           </button>
 
           <button
-            className="mini purple"
-            onClick={
-              startVoice
-            }
+            className="tos-mini"
+            onClick={startVoice}
           >
-            {isListening
-              ? "■"
-              : "🎤"}
+            <Mic size={18}/>
           </button>
 
           <button
-            className="mini teal"
-            onClick={
-              useMyLocation
-            }
+            className="tos-mini"
+            onClick={useMyLocation}
           >
-            {locating
-              ? "..."
-              : "📍"}
+            <LocateFixed size={18}/>
           </button>
 
         </div>
 
       </div>
 
-      <div className="filters">
+    </section>
 
-        {[
-          "all",
-          "now",
-          "next30",
-          "morning",
-          "evening",
-          "last"
-        ].map(
-          (
-            item
-          ) => (
-            <button
-              key={
-                item
-              }
-              className={
-                filter ===
-                item
-                  ? "activeFilter"
-                  : ""
-              }
-              onClick={() =>
-                setFilter(
-                  item
-                )
-              }
-            >
-              {
-                t[
-                  item
-                ]
-              }
-            </button>
-          )
-        )}
+    <section className="tos-filters">
 
-      </div>
+      {[
+        "all",
+        "now",
+        "next30",
+        "morning",
+        "evening",
+        "last"
+      ].map((item)=>(
+        <button
+          key={item}
+          className={
+            filter===item
+            ? "tos-chip active"
+            : "tos-chip"
+          }
+          onClick={()=>
+            setFilter(item)
+          }
+        >
+          {t[item]}
+        </button>
+      ))}
 
-      {nextBus && (
-        <div className="next">
-          {t.nextBus}:{" "}
-          {
-            nextBus.displayTag
-          }{" "}
-          •{" "}
-          {
-            nextBus.departureTime
-          }{" "}
-          (
+    </section>
+
+    {nextBus && (
+      <section className="tos-banner">
+
+        <div>
+          <small>{t.nextBus}</small>
+          <strong>
+            {nextBus.displayTag} • {nextBus.departureTime}
+          </strong>
+        </div>
+
+        <div className="tos-eta">
           {countdown()}
-          )
         </div>
-      )}
 
-      <div className="count">
-        {
-          filteredBuses.length
-        }{" "}
-        {t.found}
-      </div>
+      </section>
+    )}
 
-      {filteredBuses.map(
-        (
-          bus,
-          i
-        ) => (
-          <div
-            className={`busCard ${
-              nextBus &&
-              bus._id ===
-                nextBus._id
-                ? "highlight"
-                : ""
-            }`}
-            key={i}
-          >
-            <div className="leftTag">
-              {
-                bus.displayTag
-              }
+    <div className="tos-count">
+      {filteredBuses.length} {t.found}
+    </div>
+
+    <section className="tos-results">
+
+      {filteredBuses.map((bus,i)=>(
+        <div
+          key={i}
+          className="tos-route"
+        >
+
+          <div className="tos-code">
+            {bus.displayTag}
+          </div>
+
+          <div className="tos-mid">
+
+            <h3>
+              {translatePlace(bus.destination)}
+            </h3>
+
+            <p>
+              {t.arr}: {bus.arrivalTime || "--"} • {t.dep}: {bus.departureTime}
+            </p>
+
+            <p>
+              {translatePlace(bus.source)}
+            </p>
+
+          </div>
+
+          <div className="tos-side">
+
+            <div className={
+              bus.operatorType==="government"
+              ? "tag govt"
+              : "tag pvt"
+            }>
+              {bus.operatorType==="government" ? t.govt : t.pvt}
             </div>
 
-            <div className="mid">
-
-              <div className="dest">
-                {translatePlace(
-                  bus.destination
-                )}
-              </div>
-
-              <div className="detail">
-                {t.arr}:{" "}
-                {bus.arrivalTime ||
-                  "--"}{" "}
-                • {t.dep}:{" "}
-                {
-                  bus.departureTime
-                }
-              </div>
-
-              <div className="detail">
-                {t.source}:{" "}
-                {translatePlace(
-                  bus.source
-                )}
-              </div>
-
-            </div>
-
-            <div
-              className={
-                bus.operatorType ===
-                "government"
-                  ? "badge green"
-                  : "badge gold"
-              }
-            >
-              {bus.operatorType ===
-              "government"
-                ? t.govt
-                : t.pvt}
+            <div className="mini-eta">
+              {countdown()}
             </div>
 
           </div>
-        )
-      )}
 
-    </div>
-  );
-}
+        </div>
+      ))}
+
+    </section>
+
+    <nav className="tos-dock">
+
+      <button className="dock-item active">
+        <Home size={18}/>
+        <span>Home</span>
+      </button>
+
+      <button className="dock-item">
+        <Star size={18}/>
+        <span>Saved</span>
+      </button>
+
+      <button className="dock-item">
+        <History size={18}/>
+        <span>Recent</span>
+      </button>
+
+      <button className="dock-item">
+        <Bell size={18}/>
+        <span>Alerts</span>
+      </button>
+
+      <button className="dock-item">
+        <User size={18}/>
+        <span>Profile</span>
+      </button>
+
+    </nav>
+
+  </div>
+)};
